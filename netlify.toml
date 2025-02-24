@@ -1,4 +1,5 @@
 [build]
+  publish = "public"
   functions = "netlify/functions"
   command = "npm ci && cp -r views netlify/functions/views" 
 
