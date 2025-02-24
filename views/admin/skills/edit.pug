@@ -1,0 +1,11 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Edit Skill #{skill._id}
+    nav.links
+      a(href="/admin/skills") Back 
+    form(method="POST", action=`/admin/skills/${skill._id}/update`)
+      label(for="skillname") Skill Name:
+      input(type="text", name="skillname", id="skillname", value=skill.name) 
+      button(type="submit") Edit 

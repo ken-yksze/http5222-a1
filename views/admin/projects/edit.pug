@@ -1,0 +1,13 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Edit Project #{project._id}
+    nav.links
+      a(href="/admin/projects") Back 
+    form(method="POST", action=`/admin/projects/${project._id}/update`)
+      label(for="projectname") Project Name:
+      input(type="text", name="projectname", id="projectname", value=project.name) 
+      label(for="projectlink") Project Link:
+      input(type="text", name="projectlink", id="projectlink", value=project.link) 
+      button(type="submit") Edit 

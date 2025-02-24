@@ -1,0 +1,11 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Delete Skill #{skill._id}
+    nav.links
+      a(href="/admin/skills") Back 
+    h2 Are you sure to delete this skill?
+    h3 #{skill.name} 
+    form(method="POST", action=`/admin/skills/${skill._id}/delete`)
+      button(type="submit") Delete 

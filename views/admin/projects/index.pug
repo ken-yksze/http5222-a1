@@ -1,0 +1,12 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Projects
+    nav.links
+      a(href="/admin/projects/new") New
+    ul#projects
+      each project in projects 
+        li(id=`project-${project._id}`)
+          h2 
+            a(href=`/admin/projects/${project._id}`) #{project.name} 

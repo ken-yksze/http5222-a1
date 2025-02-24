@@ -1,0 +1,10 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Skill
+    nav.links
+      a(href=`/admin/skills/${skill._id}/confirm-delete`) Delete 
+      a(href=`/admin/skills/${skill._id}/edit`) Edit 
+      a(href="/admin/skills") Back 
+    h2 #{skill.name} 

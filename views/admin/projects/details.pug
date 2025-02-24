@@ -1,0 +1,11 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Project
+    nav.links
+      a(href=`/admin/projects/${project._id}/confirm-delete`) Delete 
+      a(href=`/admin/projects/${project._id}/edit`) Edit 
+      a(href="/admin/projects") Back 
+    h2 #{project.name} 
+    a(href=project.link, target="_blank") #{project.link} 

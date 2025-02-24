@@ -1,0 +1,11 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Delete Project #{project._id}
+    nav.links
+      a(href="/admin/projects") Back 
+    h2 Are you sure to delete this project?
+    h3 #{project.name} 
+    form(method="POST", action=`/admin/projects/${project._id}/delete`)
+      button(type="submit") Delete 

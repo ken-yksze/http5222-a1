@@ -1,0 +1,11 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title New Skill
+    nav.links
+      a(href="/admin/skills") Back 
+    form(method="POST", action="/admin/skills/add")
+      label(for="skillname") Skill Name:
+      input(type="text", name="skillname", id="skillname") 
+      button(type="submit") Add 

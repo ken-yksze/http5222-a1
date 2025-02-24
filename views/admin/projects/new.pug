@@ -1,0 +1,13 @@
+extends ../../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title New Project
+    nav.links
+      a(href="/admin/projects") Back 
+    form(method="POST", action="/admin/projects/add")
+      label(for="projectname") Project Name:
+      input(type="text", name="projectname", id="projectname") 
+      label(for="projectlink") Project Link:
+      input(type="text", name="projectlink", id="projectlink") 
+      button(type="submit") Add 
