@@ -1,4 +1,3 @@
-const serverless = require("serverless-http");
 const express = require("express");
 const path = require("path"); //needed when setting up static/file paths
 const dotenv = require("dotenv");
@@ -139,5 +138,7 @@ if (process.env.ENV === "dev") {
     console.log(`Listening on http://localhost:${port}`);
   });
 } else {
-  module.exports.handler = serverless(app);
+  module.exports = {
+    app,
+  };
 }
