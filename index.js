@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path"); //needed when setting up static/file paths
 const dotenv = require("dotenv");
+const pug = require("pug");
 
 //load the environment variables from .env
 if (process.env.ENV === "dev") {

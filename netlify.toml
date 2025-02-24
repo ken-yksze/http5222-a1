@@ -1,6 +1,6 @@
 [build]
   functions = "netlify/functions"
-  command = "npm i" 
+  command = "npm ci && cp -r views netlify/functions/views" 
 
 [[redirects]]
   from = "/*"
