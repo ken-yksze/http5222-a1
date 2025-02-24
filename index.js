@@ -19,7 +19,7 @@ app.set(
   "views",
   process.env.ENV === "dev"
     ? path.join(__dirname, "views")
-    : path.join(__dirname, "..", "views")
+    : path.join(__dirname, "functions", "views")
 );
 
 app.set("view engine", "pug");

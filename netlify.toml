@@ -3,6 +3,9 @@
   functions = "netlify/functions"
   command = "npm ci && cp -r views netlify/functions/views" 
 
+[functions]
+  included_files = ["views/**"]
+
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/index"
