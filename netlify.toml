@@ -1,10 +1,9 @@
 [build]
-  publish = "public"
   functions = "netlify/functions"
-  command = "npm ci && cp -r views netlify/functions/views" 
+  command = "npm ci && cp -r views netlify/functions/views && cp -r public netlify/functions/public" 
 
 [functions]
-  included_files = ["views/**"]
+  included_files = ["netlify/functions/views/**", "netlify/functions/public/**"]
 
 [[redirects]]
   from = "/*"

@@ -15,19 +15,11 @@ const app = express();
 const port = process.env.PORT || "8888";
 
 //set up application template engine
-app.set(
-  "views",
-  process.env.ENV === "dev"
-    ? path.join(__dirname, "views")
-    : path.join(__dirname, "functions", "views")
-);
-
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-if (process.env.ENV === "dev") {
-  //set up folder for static files
-  app.use(express.static(path.join(__dirname, "public")));
-}
+//set up folder for static files
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
