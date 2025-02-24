@@ -1,9 +1,12 @@
+const serverless = require("serverless-http");
 const express = require("express");
 const path = require("path"); //needed when setting up static/file paths
 const dotenv = require("dotenv");
 
 //load the environment variables from .env
-dotenv.config();
+if (process.env.ENV === "dev") {
+  dotenv.config();
+}
 
 const db = require("./modules/portfolio/db"); //load db.js
 
@@ -20,27 +23,6 @@ app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// //USE PAGE ROUTES FROM ROUTER(S)
-// app.get("/", async (request, response) => {
-//   let movieList = await db.getMovies();
-
-//   //if there's nothing in the movies collection, initialize with some content then get the movies again
-//   if (!movieList.length) {
-//     await db.initializeMovies();
-//     movieList = await db.getMovies();
-//   }
-
-//   response.render("index", { movies: movieList });
-// });
-// app.get("/update", async (request, response) => {
-//   await db.updateMovieRating("Harry Potter and the Sorcerer's Stone", "R");
-//   response.redirect("/");
-// });
-// app.get("/delete", async (request, response) => {
-//   await db.deleteMoviesByRating("R");
-//   response.redirect("/");
-// });
 
 app.get("/", async (request, response) => {
   response.render("index");
@@ -151,7 +133,11 @@ app.get("/api/skills", async (request, response) => {
   response.send(skills);
 });
 
-//set up server listening
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
-});
+if (process.env.ENV === "dev") {
+  //set up server listening
+  app.listen(port, () => {
+    console.log(`Listening on http://localhost:${port}`);
+  });
+} else {
+  module.exports.handler = serverless(app);
+}
