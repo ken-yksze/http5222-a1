@@ -14,6 +14,7 @@ const ProjectsSchema = new mongoose.Schema(
 const SkillsSchema = new mongoose.Schema(
   {
     name: mongoose.SchemaTypes.String,
+    icon: mongoose.SchemaTypes.String,
   },
   { collection: "skills" }
 );
@@ -35,7 +36,7 @@ async function getProjects() {
 //Get all skills from the skills collection
 async function getSkills() {
   await connect();
-  return await Skills.find({});
+  return await Skills.find({}).sort({ icon: "asc" });
 }
 
 //Get one project by id
@@ -57,9 +58,9 @@ async function createProject(name, link) {
 }
 
 //Create one skill
-async function createSkill(name) {
+async function createSkill(name, icon) {
   await connect();
-  return await Skills.insertOne({ name: name });
+  return await Skills.insertOne({ name: name, icon: icon.toLowerCase() });
 }
 
 //Update on project
@@ -69,9 +70,9 @@ async function updateProject(id, name, link) {
 }
 
 //Update on skill
-async function updateSkill(id, name) {
+async function updateSkill(id, name, icon) {
   await connect();
-  await Skills.updateOne({ _id: id }, { name: name });
+  await Skills.updateOne({ _id: id }, { name: name, icon: icon.toLowerCase() });
 }
 
 //Delete a project

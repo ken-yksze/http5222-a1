@@ -8,4 +8,6 @@ block layout-content
     form(method="POST", action=`/admin/skills/${skill._id}/update`)
       label(for="skillname") Skill Name:
       input(type="text", name="skillname", id="skillname", value=skill.name) 
+      label(for="skillicon") Skill Icon:
+      input(type="text", name="skillicon", id="skillicon", value=skill.icon) 
       button(type="submit") Edit 

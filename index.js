@@ -24,6 +24,14 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200,
+};
+
+var cors = require("cors");
+app.use(cors(corsOptions));
+
 app.get("/", async (request, response) => {
   response.render("index");
 });
@@ -55,7 +63,10 @@ app.post("/admin/projects/add", async (request, response) => {
 });
 
 app.post("/admin/skills/add", async (request, response) => {
-  const skill = await db.createSkill(request.body.skillname);
+  const skill = await db.createSkill(
+    request.body.skillname,
+    request.body.skillicon
+  );
   response.redirect(`/admin/skills/${skill._id}`);
 });
 
@@ -83,7 +94,7 @@ app.post("/admin/projects/:id/update", async (request, response) => {
 
 app.post("/admin/skills/:id/update", async (request, response) => {
   const id = request.params.id;
-  await db.updateSkill(id, request.body.skillname);
+  await db.updateSkill(id, request.body.skillname, request.body.skillicon);
   response.redirect(`/admin/skills/${id}`);
 });
 
