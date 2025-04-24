@@ -6,9 +6,19 @@ const dbUrl = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${proces
 const ProjectsSchema = new mongoose.Schema(
   {
     name: mongoose.SchemaTypes.String,
+    thumbnail: mongoose.SchemaTypes.String,
     link: mongoose.SchemaTypes.String,
+    description: mongoose.SchemaTypes.String,
   },
   { collection: "projects" }
+);
+
+const ProjectSkillsSchema = new mongoose.Schema(
+  {
+    projectId: mongoose.SchemaTypes.ObjectId,
+    skillId: mongoose.SchemaTypes.ObjectId,
+  },
+  { collection: "project_skills" }
 );
 
 const SkillsSchema = new mongoose.Schema(
@@ -20,6 +30,7 @@ const SkillsSchema = new mongoose.Schema(
 );
 
 const Projects = mongoose.model("Projects", ProjectsSchema);
+const ProjectSkills = mongoose.model("ProjectSkills", ProjectSkillsSchema);
 const Skills = mongoose.model("Skills", SkillsSchema);
 
 //MONGODB FUNCTIONS
@@ -30,7 +41,42 @@ async function connect() {
 //Get all projects from the projects collection
 async function getProjects() {
   await connect();
-  return await Projects.find({});
+  return await Projects.aggregate([
+    {
+      $lookup: {
+        from: ProjectSkills.collection.name,
+        let: { id: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ["$$id", "$projectId"] },
+            },
+          },
+          {
+            $lookup: {
+              from: Skills.collection.name,
+              let: { skillId: "$skillId" },
+              pipeline: [
+                {
+                  $match: {
+                    $expr: { $eq: ["$_id", "$$skillId"] },
+                  },
+                },
+                {
+                  $sort: { name: 1 },
+                },
+              ],
+              as: "skills",
+            },
+          },
+          { $unwind: "$skills" },
+          { $replaceRoot: { newRoot: "$skills" } },
+        ],
+        as: "skills",
+      },
+    },
+    { $sort: { name: 1 } },
+  ]);
 }
 
 //Get all skills from the skills collection
